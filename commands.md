@@ -1,36 +1,61 @@
-# MacOS commands
+# Experiment 9 – Kubernetes Deployment Commands
 
-set -e
+## 1. Navigate to the Experiment 9 folder
 
-# 1. Compile the Java program
-javac Exp5/HelloWorld.java
+```bash
+cd ..
+cd Exp9
+pwd
+ls
+```
 
-# 2. Create a deployment directory
-mkdir -p deployed-app
+## 2. Deploy the application
 
-# 3. Copy the compiled application
-cp Exp5/HelloWorld.class deployed-app/
+```bash
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
 
-# 4. Run the deployed application
-java -cp deployed-app HelloWorld
+## 3. Check the pods
 
-#Windows commands
+```bash
+kubectl get pods -l app=myapp
+```
 
-# Under Build Steps, select Execute Windows batch command and enter:
+## 4. Check the service
 
-@echo off
-setlocal
+```bash
+kubectl get services myapp-service
+```
 
-REM 1. Compile the Java program
-javac Exp5\HelloWorld.java
-if errorlevel 1 exit /b 1
+## 5. Display deployment details
 
-REM 2. Create deployment directory
-if not exist deployed-app mkdir deployed-app
+```bash
+kubectl describe deployment myapp
+```
 
-REM 3. Copy compiled application
-copy /Y Exp5\HelloWorld.class deployed-app\
+## 6. View application logs
 
-REM 4. Run the deployed application
-java -cp deployed-app HelloWorld
-if errorlevel 1 exit /b 1
+```bash
+kubectl logs -l app=myapp --tail=10
+```
+
+## 7. Verify the deployment
+
+```bash
+kubectl get deployment myapp
+kubectl get pods -l app=myapp
+kubectl get service myapp-service
+```
+
+## Result
+
+The Kubernetes deployment was successful. Three replicas were created and all three pods reached the `Running` state. The `myapp-service` ClusterIP service was also created successfully.
+
+**Image used:** `nginx:latest`
+
+**Replicas:** 3
+
+**Service type:** ClusterIP
+
+**Container port:** 80
