@@ -1,12 +1,36 @@
-cd flask-app 
+# MacOS commands
 
-pip3 install -r requirements.txt
+set -e
 
-docker build --no-cache -t flask-app
+# 1. Compile the Java program
+javac Exp5/HelloWorld.java
 
-docker run -p 5000:5000 flask-app
+# 2. Create a deployment directory
+mkdir -p deployed-app
 
+# 3. Copy the compiled application
+cp Exp5/HelloWorld.class deployed-app/
 
-web browser:
+# 4. Run the deployed application
+java -cp deployed-app HelloWorld
 
-https://localhost:/5000/register
+#Windows commands
+
+# Under Build Steps, select Execute Windows batch command and enter:
+
+@echo off
+setlocal
+
+REM 1. Compile the Java program
+javac Exp5\HelloWorld.java
+if errorlevel 1 exit /b 1
+
+REM 2. Create deployment directory
+if not exist deployed-app mkdir deployed-app
+
+REM 3. Copy compiled application
+copy /Y Exp5\HelloWorld.class deployed-app\
+
+REM 4. Run the deployed application
+java -cp deployed-app HelloWorld
+if errorlevel 1 exit /b 1
