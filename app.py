@@ -1,22 +1,11 @@
-from flask import Flask, request, render_template
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
-app = Flask(__name__)
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Hello! Docker and Kubernetes are integrated.")
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        password = request.form['password']
-
-        # Store the user data in a database or file
-        print("Name:", name)
-        print("Email:", email)
-        print("Password:", password)
-
-        return render_template('success.html')
-
-    return render_template('register.html')
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+server = HTTPServer(("0.0.0.0", 5000), Handler)
+print("Server running on port 5000")
+server.serve_forever()

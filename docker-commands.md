@@ -1,47 +1,73 @@
-# Experiment 7: Docker Containerized Application
+# Experiment 8: Integrate Docker and Kubernetes
 
-## Aim
-Develop a simple containerized application using Docker.
+## Docker Commands
 
-## Application
-Python program that prints "Hello World from Docker Container!"
-
-## Docker Commands Used
-
-### 1. Build the Docker image
+### 1. Check Docker version
 ```bash
-docker build -t myimage .
+docker --version
 ```
-Builds an image named myimage using the Dockerfile in the current directory.
 
-### 2. Run the container
+### 2. Build the Docker image
 ```bash
-docker run --name mycontainer myimage
+docker build -t YOUR_USERNAME/exp8-app:1.0 .
 ```
-Creates and runs a container named mycontainer.
 
-### 3. View container logs
-```bash
-docker logs mycontainer
-```
-Displays the application's output.
-
-### 4. List all containers
-```bash
-docker ps -a
-```
-Displays running and stopped containers.
-
-### 5. List Docker images
+### 3. List Docker images
 ```bash
 docker images
 ```
-Displays the available Docker images.
 
-## Expected Output
-```text
-Hello World from Docker Container!
+### 4. Log in to Docker Hub
+```bash
+docker login
 ```
 
-## Result
-Successfully built a Docker image, ran a containerized Python application, and verified its output.
+### 5. Push the image to Docker Hub
+```bash
+docker push YOUR_USERNAME/exp8-app:1.0
+```
+
+### 6. Run the Docker container for testing (optional)
+```bash
+docker run -d --name exp8-test -p 5000:5000 YOUR_USERNAME/exp8-app:1.0
+```
+
+### 7. Stop and remove the test container
+```bash
+docker stop exp8-test
+docker rm exp8-test
+```
+
+## Kubernetes Commands
+
+### 1. Check Kubernetes nodes
+```bash
+kubectl get nodes
+```
+
+### 2. Deploy the application
+```bash
+kubectl apply -f deployment.yaml
+```
+
+### 3. Check deployments
+```bash
+kubectl get deployments
+```
+
+### 4. Check pods
+```bash
+kubectl get pods
+```
+
+### 5. Check services
+```bash
+kubectl get services
+```
+
+### 6. Delete the deployment and service (optional cleanup)
+```bash
+kubectl delete -f deployment.yaml
+```
+
+**Note:** Replace `YOUR_USERNAME` with your Docker Hub username before running the Docker commands. The Docker image must be pushed to Docker Hub and the image name in `deployment.yaml` must match.

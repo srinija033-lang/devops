@@ -1,12 +1,5 @@
-
-# Use Python as the base image
-FROM python:3.9
-
-# Set the working directory
+FROM python:3.12-slim
 WORKDIR /app
-
-# Copy the Python file into the container
-COPY hello.py .
-
-# Run the Python application
-CMD ["python", "hello.py"]
+COPY app.py .
+EXPOSE 5000
+CMD ["python", "-u", "app.py"]
