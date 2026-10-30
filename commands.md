@@ -1,61 +1,90 @@
-# Exp11 – JavaScript Testing Using Selenium
+# Experiment 12 – Selenium Testing of a Containerized Application
 
-## 1. Open Exp11 Folder
+## 1. Navigate to the project directory
+
 ```bash
-cd ~/Desktop/Devops-Lab/Exp11
-code .
+cd ~/Desktop/Devops-Lab
+mkdir Exp12
+cd Exp12
 ```
 
-## 2. Create Maven Project
+## 2. Create the Maven project
+
 ```bash
 mvn archetype:generate \
   -DgroupId=com.devops \
-  -DartifactId=Exp11 \
+  -DartifactId=Exp12 \
   -DarchetypeArtifactId=maven-archetype-quickstart \
   -DinteractiveMode=false
 ```
 
-## 3. Enter Maven Project Folder
 ```bash
-cd Exp11
+cd Exp12
 ```
 
-## 4. Check Project Files
+## 3. Locate the Maven project file
+
 ```bash
-ls
+find . -name pom.xml
 ```
 
-## 5. Download Dependencies
+## 4. Find Java files
+
 ```bash
-mvn dependency:resolve
+find . -name "*.java"
 ```
 
-## 6. Run Selenium Test
+## 5. Rename the Selenium test file
+
+```bash
+mv src/test/java/com/devops/Maintest.java src/test/java/com/devops/MainTest.java
+```
+
+## 6. Copy the webpage from Experiment 11
+
+```bash
+cp ../../Exp11/program.html .
+```
+
+## 7. Build the Docker image
+
+```bash
+docker build -t exp12-app .
+```
+
+## 8. Run the Docker container
+
+```bash
+docker run -d --name exp12-container -p 8080:80 exp12-app
+```
+
+## 9. Check running containers
+
+```bash
+docker ps
+```
+
+## 10. Run Selenium test cases
+
 ```bash
 mvn clean test
 ```
 
-## 7. Check Current Directory
+## 11. View test results
+
 ```bash
-pwd
+cat target/surefire-reports/*.txt
 ```
 
-## 8. Check Test Report
+## 12. Stop the Docker container
+
 ```bash
-cat target/surefire-reports/com.devops.AppTest.txt
+docker stop exp12-container
 ```
 
-## Expected Output
-```text
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-BUILD SUCCESS
-```
+## Expected result
 
-## Files Used
-- `program.html` – JavaScript program with an Increment button.
-- `pom.xml` – Maven configuration with Selenium and JUnit dependencies.
-- `src/test/java/com/devops/AppTest.java` – Selenium test case.
-- `commands.md` – Commands used for the experiment.
-
-## Result
-The Selenium test successfully opens Chrome, clicks the Increment button, verifies that the displayed value changes from 0 to 1, and closes the browser.
+- Docker container runs the webpage.
+- Selenium opens Chrome and executes the test cases.
+- Maven reports `BUILD SUCCESS`.
+- Both tests pass with zero failures and errors.

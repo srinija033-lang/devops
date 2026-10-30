@@ -1,5 +1,4 @@
-FROM python:3.12-slim
-WORKDIR /app
-COPY app.py .
-EXPOSE 5000
-CMD ["python", "-u", "app.py"]
+
+FROM nginx:alpine
+COPY program.html /usr/share/nginx/html/index.html
+EXPOSE 80
